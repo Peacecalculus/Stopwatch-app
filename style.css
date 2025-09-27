@@ -174,12 +174,11 @@ body.dark-mode .fa-moon {
     transform: rotateY(180deg); 
 }
 
-/* Responsive design for smaller screens */
 @media (max-width: 600px) {
     .container {
         width: 90%;
     }
-    
+
     .top-flex{
         flex-direction: column;
         gap: 1em;
@@ -198,3 +197,4 @@ body.dark-mode .fa-moon {
         font-size: .8rem;
     }
 }
+

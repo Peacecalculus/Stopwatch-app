@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STOPWATCH APP</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <section class="header">
+        <div class="top-flex">
+                <span class="stp"><i class="fa-solid fa-stopwatch"></i>STOPWATCH APP</span>
+                <h3>Ezekiel Emem Peace-ID: ALT/SOE/025/3141 </h3>
+                <div id="themeToggleBtn">
+                    <i class="fa-solid fa-sun"></i>
+                    <i class="fa-solid fa-moon"></i>
+                </div>
+            </div>
+    </section>
+    <section class="container">
+        <div class="stopwatch">
+           <span id="hours">00</span>:<span id="minutes">00</span>:<span id="seconds">00</span>:<span id="milliseconds">0000</span>
+        </div>
+        <div class="buttons">
+            <img src="images/stop.png" alt="stop button" class="btn" id="stop">
+            <img src="images/start.png" alt="start button" class="btn" id="start">
+            <img src="images/reset.png" alt="reset button" class="btn" id="reset">
+        </div>
+        <div class="lap">
+            <button id="lapBtn">Lap</button>
+            <div id="lapsContainer">
+                 <h3>Laps</h3>
+                <ul id="lapsList">
+                 <!-- Laps will be appended here --> 
+                </ul>
+            </div>
+        </div>
+        </div>
+    </section>
+    
+    <!-- Link to your JavaScript file -->
+    <script src="stopwatch.js"></script>
+</body>
+</html>

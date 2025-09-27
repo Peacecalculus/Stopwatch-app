@@ -1,0 +1,176 @@
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #565151;
+    margin: 0;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Flex container for the top section */
+.top-flex{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 15em;
+    margin-bottom: 20px;
+    padding: 1em;
+    background-color: rgb(21, 8, 8);
+    color: #fff;
+}
+
+/* Container for the stopwatch */
+.container {
+    width: 50%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Style for the stopwatch icon */
+.stopwatch-icon {
+    margin-right: 10px;
+}
+
+/* Style for the stopwatch text */
+.stopwatch{
+    font-size: 3rem;
+    margin-right: 10px;
+    text-align: center;
+    margin-block-start: .2em;
+    margin-block-end: 1em;
+    
+}
+/* Style for the "STOPWATCH APP" text */
+.stp {
+    font-size: .9rem;
+    font-weight: bold;
+}
+
+/* Style for the name and ID text */
+h3 {
+    font-size: 1rem;
+    font-weight: normal;
+    margin: 0;
+    text-transform: uppercase; ;
+}
+
+
+/* Button styles */
+.buttons img {
+    width: 70px;
+    border: none;
+    cursor: pointer;
+    padding: 0 2.5em;
+    transition: 0.3s ease;
+}
+
+/* Hover effect for buttons */
+.buttons img:hover {
+    transform: scale(1.1);
+    border-radius: 10px;
+}
+
+/* Lap button and container styles */
+.lap {
+    text-align: center;
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+
+/* Style for the Lap button */
+#lapBtn{
+    border: none;
+    border-radius: .5em;
+    background-color: rgb(41, 125, 41);
+    color: #fff;
+    padding: 0.5em 3em;
+    font-size: .9rem;
+}
+
+/* Hover effect for the Lap button */
+#lapBtn:hover {
+    transform: scale(1.05);
+    background-color: rgb(35, 152, 35);
+    cursor: pointer;
+}
+
+/* Container for the laps list */
+#lapsContainer {
+    margin-top: 1em;
+    text-align: left;
+    max-height: 200px;
+    overflow-y: scroll;
+    padding: .5em;
+    border-radius: .5em;
+    /* LIGHT MODE STYLES: */
+    background-color: #5b5959; 
+    color: #fff; 
+    transition: background-color 0.3s, color 0.3s; 
+}
+
+/* 2. DARK MODE Override (When the <body> has the .dark-mode class) */
+body.dark-mode #lapsContainer {
+    background-color: #1b1a1a; 
+    color: #fff; 
+}
+
+/* Container for the theme icons */
+#themeToggleBtn {
+    cursor: pointer;
+    position: relative; 
+    width: 24px; 
+    height: 24px;
+}
+
+/* Style for both sun and moon icons */
+#themeToggleBtn .fa-sun,
+#themeToggleBtn .fa-moon {
+    color: rgba(255,140,0,1);
+    position: absolute; 
+    top: 0;
+    left: 0;
+    font-size: 24px; 
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+/* Dark mode styles */
+.dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+/* Light mode styles */
+.light-mode {
+    background-color: #565151;
+    color: #000000;
+}
+
+/* --- LIGHT MODE (DEFAULT) --- */
+/* Show the sun icon */
+body:not(.dark-mode) .fa-sun {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Hide the moon icon */
+body:not(.dark-mode) .fa-moon {
+    opacity: 0;
+    transform: scale(0);
+}
+
+/* --- DARK MODE --- */
+/* Hide the sun icon */
+body.dark-mode .fa-sun {
+    opacity: 0;
+    transform: scale(0);
+}
+
+/* Show the moon icon */
+body.dark-mode .fa-moon {
+    opacity: 1;
+    transform: scale(1);
+    transform: rotateY(180deg);
+    
+}

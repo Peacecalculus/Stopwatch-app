@@ -34,15 +34,18 @@ body {
     margin-right: 10px;
 }
 
-/* Style for the stopwatch text */
+/* Style for the stopwatch text *//* Style for the stopwatch text */
 .stopwatch{
     font-size: 3rem;
     margin-right: 10px;
     text-align: center;
     margin-block-start: .2em;
     margin-block-end: 1em;
-    
-}
+    font-family: 'Courier New', monospace; 
+    font-variant-numeric: tabular-nums; 
+    will-change: content, transform;
+} 
+
 /* Style for the "STOPWATCH APP" text */
 .stp {
     font-size: .9rem;
@@ -102,19 +105,37 @@ body {
     border-radius: 10px;
 }
 
-/* 1. DEFAULT STYLES for #lapsContainer */
+/* 1. DEFAULT STYLES for #lapsContainer - MUST be fixed height/scrolling */
 #lapsContainer {
     margin-top: .7em;
     transition: background-color 0.3s, color 0.3s; 
     max-height: 250px;
-    overflow-y: auto;  
+    overflow-y: auto; 
     will-change: transform; 
 }
 
-#lapsList{
-    list-style-type: decimal;
-    padding-left: 1em;
-    margin: 0;
+/* 2. DARK MODE Override (Keep this separate) */
+html.dark-mode #lapsContainer {
+    color: #fff; 
+}
+
+/* List container performance boost */
+#lapsList {
+    list-style-type: none; 
+    padding-left: 0;
+    margin: 0; 
+    will-change: transform; 
+}
+
+/* Individual item performance boost */
+#lapsList li {
+    margin-bottom: 10px; 
+    /* ... rest of your li styles ... */
+    
+    /* NEW: Force GPU rendering for each lap item */
+    will-change: transform, opacity;
+    
+    transition: background-color 0.3s, color 0.3s; /* Ensure smooth color changes in dark mode */
 }
 
 /* Lap button and container styles */
@@ -181,134 +202,92 @@ body {
     color: #333; 
 }
 
-/* Dark Mode adjustment for the Features section */
-html.dark-mode .features-implemented {
-    border-top: 1px solid #323131; 
-    color: #eee; 
+/* Fix the color of icons in the features list for both themes */
+.features-implemented li i {
+    color: #333; /* Default icon color for light mode */
+}
+html.dark-mode .features-implemented li i {
+    color: #eee; /* Icon color for dark mode */
 }
 
-html.dark-mode .features-implemented h3 {
-    color: #eee;
-}
 
-html.dark-mode .features-implemented {
-    border-top: 1px solid #444;
-}
-
-/* Optional: DARK MODE adjustment for the lap items */
-html.dark-mode #lapsList li {
-    background-color: #444; /
-}
-/* 1. DEFAULT STYLES for #lapsContainer */
-#lapsContainer {
-    /* LIGHT MODE STYLES: */
-    margin-top: .7em;
-    transition: background-color 0.3s, color 0.3s; 
-}
-
-/* 2. DARK MODE Override (When the <body> has the .dark-mode class) */
-html.dark-mode #lapsContainer {
-    color: #fff; 
-}
-
-/* Container for the theme icons */
-#themeToggleBtn {
-    cursor: pointer;
-    position: relative; 
-    width: 24px; 
-    height: 24px;
-}
-
-/* Style for both sun and moon icons */
-#themeToggleBtn .fa-sun,
-#themeToggleBtn .fa-moon {
-    color: rgba(255,140,0,1);
-    position: absolute; 
-    top: 0;
-    left: 0;
-    font-size: 24px; 
-    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-}
-
-/* Dark mode styles - Target the HTML element */
+/* --- Dark Mode Overrides (Consolidated) --- */
 html.dark-mode {
     background-color: #121212;
     color: #ffffff;
 }
-
-/* Ensure the body gets the background/color from the HTML element */
 html.dark-mode body {
-    background-color: transparent; 
-    color: inherit;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-/* Light mode styles - Target the HTML element (for completeness) */
-html:not(.dark-mode) {
-    background-color: #ffffff;
-    color: #000000;
-}
-
-/* Ensure the body has no specific background in light mode */
-html:not(.dark-mode) body {
     background-color: transparent;
     color: inherit;
 }
-
-/* Light mode styles */
-.light-mode {
-    background-color: #ffffff;
-    color: #000000;
+html.dark-mode #lapsContainer {
+    color: #fff;
+}
+html.dark-mode #lapsList li {
+    background-color: #444;
+}
+html.dark-mode .features-implemented {
+    background-color: #1a1a1a;
+    border-top: 1px solid #444;
+    color: #eee;
+}
+html.dark-mode .features-implemented h3 {
+    color: #eee;
 }
 
-/* --- LIGHT MODE (DEFAULT) --- */
-/* Show the sun icon */
-html:not(.dark-mode) .fa-sun {
-    opacity: 1;
-    transform: scale(1);
+/* --- Theme Toggle Icon CSS (No changes needed, but here for completeness) --- */
+#themeToggleBtn {
+    cursor: pointer;
+    position: relative;
+    width: 24px;
+    height: 24px;
 }
-
-/* Hide the moon icon */
+#themeToggleBtn .fa-sun,
+#themeToggleBtn .fa-moon {
+    color: rgba(255, 140, 0, 1);
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 24px;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+/* By default (light mode), show the sun and hide the moon */
 html:not(.dark-mode) .fa-moon {
     opacity: 0;
     transform: scale(0);
 }
-
-/* --- DARK MODE --- */
-/* Hide the sun icon */
+html:not(.dark-mode) .fa-sun {
+    opacity: 1;
+    transform: scale(1);
+}
+/* In dark mode, hide the sun and show the moon */
 html.dark-mode .fa-sun {
     opacity: 0;
     transform: scale(0);
 }
-
-/* Show the moon icon */
 html.dark-mode .fa-moon {
     opacity: 1;
     transform: scale(1);
-    transform: rotateY(180deg); 
 }
 
+
+/* --- Fix Media Query Syntax --- */
 @media (max-width: 600px) {
     .container {
         width: 90%;
     }
-
-    .top-flex{
+    .top-flex {
         flex-direction: column;
         gap: 1em;
-    
+    }
     .buttons img {
         width: 50px;
         padding: 0 1em;
     }
-    
-    .stopwatch{
+    .stopwatch {
         font-size: 2rem;
     }
-    
     h3 {
         font-size: .8rem;
     }
-}
-
 }

@@ -4,40 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>STOPWATCH APP</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <script>
+        // This script runs instantly to prevent the "flash" of the wrong theme.
         (function() {
             const savedTheme = localStorage.getItem('theme');
-            
             if (savedTheme === 'dark') {
-                // 1. Apply dark-mode class globally (fixes overall body/html background)
-                document.documentElement.classList.add('dark-mode'); 
-                
-                // 2. NEW: Target the element and apply its dark background instantly
-                const features = document.querySelector('.features-implemented');
-                if (features) {
-                    features.style.backgroundColor = '#1a1a1a'; // Match a dark background
-                }
+                document.documentElement.classList.add('dark-mode');
             }
         })();
     </script>
 </head>
-</head>
 <body>
     <section class="header">
         <div class="top-flex">
-                <span class="stp"><i class="fa-solid fa-stopwatch"></i>STOPWATCH APP</span>
-                <h3>Ezekiel Emem Peace-ID: ALT/SOE/025/3141 </h3>
-                <div id="themeToggleBtn">
-                    <i class="fa-solid fa-sun"></i>
-                    <i class="fa-solid fa-moon"></i>
-                </div>
+            <span class="stp"><i class="fa-solid fa-stopwatch"></i>STOPWATCH APP</span>
+            <h3>Ezekiel Emem Peace-ID: ALT/SOE/025/3141</h3>
+            <div id="themeToggleBtn">
+                <i class="fa-solid fa-sun"></i>
+                <i class="fa-solid fa-moon"></i>
             </div>
+        </div>
     </section>
+
     <section class="container">
         <div class="stopwatch">
-           <span id="hours">00</span>:<span id="minutes">00</span>:<span id="seconds">00</span>:<span id="milliseconds">0000</span>
+            <span id="hours">00</span>:<span id="minutes">00</span>:<span id="seconds">00</span>:<span id="milliseconds">000</span>
         </div>
         <div class="buttons">
             <img src="images/stop.png" alt="stop button" class="btn" id="stop">
@@ -48,32 +41,23 @@
             <button id="lapBtn"><i class="fa-solid fa-flag"></i></button>
             <div id="lapsContainer">
                 <ul id="lapsList">
-                 <!-- Laps will be appended here --> 
-                </ul>
+                    </ul>
             </div>
         </div>
         <div class="about">
             <div class="features-implemented">
                 <h3>Features Implemented</h3>
                 <ul id="featuresList">
-                    <li><i class="fa-solid fa-play" style="color: black;"></i> **Start (White)**: Begins the timer.</li>
-                    <li><i class="fa-solid fa-stop" style="color: black;"></i> **Stop (White)**: Pauses the timer, maintaining the current time.</li>
-                    <li><i class="fa-solid fa-rotate-right" style="color: orange;"></i> **Reset (White)**: Stops the timer, clears the time, and wipes the laps.</li>
-                    <li><i class="fa-solid fa-flag" style="color: blue;"></i> **Lap (Button)**: Records the current running time to the list.</li>
-                    <li><i class="fa-solid fa-sun" style="color: rgba(255,140,0,1);"></i> / <i class="fa-solid fa-moon" style="color: rgba(255,140,0,1);"></i> **Theme Toggle**: Switches between light and dark mode, saving the preference.</li>
+                     <li><i class="fa-solid fa-play"></i> **Start**: Begins the timer.</li>
+                     <li><i class="fa-solid fa-stop"></i> **Stop**: Pauses the timer.</li>
+                     <li><i class="fa-solid fa-rotate-right"></i> **Reset**: Clears the timer and laps.</li>
+                     <li><i class="fa-solid fa-flag"></i> **Lap**: Records the current time.</li>
+                     <li><i class="fa-solid fa-sun"></i> / <i class="fa-solid fa-moon"></i> **Theme Toggle**: Switches themes and saves preference.</li>
                 </ul>
             </div>
         </div>
     </section>
-    
-    <script src="stopwatch.js"></script>
-</body>
-</html>
-        </div>
-    </section>
-    
-    
-    <!-- Link to your JavaScript file -->
+
     <script src="stopwatch.js"></script>
 </body>
 </html>

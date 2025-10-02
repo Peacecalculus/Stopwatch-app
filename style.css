@@ -1,7 +1,8 @@
 /* General styles */
 body {
     font-family: Arial, sans-serif;
-    background-color: #565151;
+    background-color: #ffffff;
+    color: #000000;
     margin: 0;
     transition: background-color 0.3s, color 0.3s;
 }
@@ -13,7 +14,7 @@ body {
     align-items: center;
     gap: 15em;
     margin-bottom: 20px;
-    padding: 1em;
+    padding: .2em;
     background-color: rgb(21, 8, 8);
     color: #fff;
 }
@@ -48,18 +49,47 @@ body {
     font-weight: bold;
 }
 
-/* Style for the name and ID text */
-h3 {
-    font-size: 1rem;
-    font-weight: normal;
-    margin: 0;
-    text-transform: uppercase; ;
+/* stop styles */
+#stop{
+    background-color: #ff4500;
+    border-radius: 20em;
+    padding: 0 .1em;
+    border: none;
+    margin-right: 3.5em;
+    font-size: .9rem;
 }
 
+/* Ensure the stop button is hidden by default when the page first loads */
+#stop {
+    display: none;
+}
+
+/* start styles */
+#start{
+    background-color: rgb(41, 125, 41);
+    border-radius: 20em;
+    padding: 0 .1em;
+    border: none;
+    margin-right: 3.5em;
+    font-size: .9rem;
+}
+
+/* reset styles */
+#reset{
+    background-color: rgb(125, 41, 41);
+    border-radius: 20em;
+    padding: 0 .1em;
+    border: none;
+    font-size: .9rem;
+}
 
 /* Button styles */
+/* --- BUTTON IMAGES FIX --- */
+/* Apply a forced height and width to prevent layout shift/flash */
 .buttons img {
-    width: 70px;
+    width: 70px; 
+    height: 70px; 
+    display: inline-block; 
     border: none;
     cursor: pointer;
     padding: 0 2.5em;
@@ -70,6 +100,12 @@ h3 {
 .buttons img:hover {
     transform: scale(1.1);
     border-radius: 10px;
+}
+
+#lapsList{
+    list-style-type: decimal;
+    padding-left: 1em;
+    margin: 0;
 }
 
 /* Lap button and container styles */
@@ -85,7 +121,7 @@ h3 {
     border-radius: .5em;
     background-color: rgb(41, 125, 41);
     color: #fff;
-    padding: 0.5em 3em;
+    padding: 0.5em 2em;
     font-size: .9rem;
 }
 
@@ -95,24 +131,75 @@ h3 {
     background-color: rgb(35, 152, 35);
     cursor: pointer;
 }
+/* 1. Style the Unordered List (UL) to remove default spacing/bullets */
+#lapsList {
+    list-style-type: none; 
+    padding-left: 0;      
+    margin: 0;            
+}
 
-/* Container for the laps list */
-#lapsContainer {
-    margin-top: 1em;
+/* 2. Style the List Items (li) to look like blocks */
+#lapsList li {
+    margin-bottom: 10px; 
+    background-color: #797979; 
+    color: #fff;              
+    padding: 5px;            
+    border-radius: 20px;          
+    font-size: 1.1rem;
+    display: block; 
+    width: 100%;            
+    box-sizing: border-box;  
+    border-bottom: none !important;
+    padding-bottom: 5px;
+}
+
+/* Style for the Features Implemented section - BASE (Light Mode) */
+.features-implemented {
+    background-color: #8a8686;
     text-align: left;
-    max-height: 200px;
-    overflow-y: scroll;
-    padding: .5em;
-    border-radius: .5em;
+    margin-top: 30px;
+    padding: 10px;
+    border-radius: 10px;
+    border-top: 1px solid #ccc;
+    color: #121212; 
+    transition: border-top 0.3s, color 0.3s;
+}
+
+.features-implemented h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #333; 
+}
+
+/* Dark Mode adjustment for the Features section */
+html.dark-mode .features-implemented {
+    /* Override only the Light Mode properties */
+    border-top: 1px solid #323131; 
+    color: #eee; /* Light text in Dark Mode */
+}
+
+html.dark-mode .features-implemented h3 {
+    color: #eee;
+}
+
+html.dark-mode .features-implemented {
+    border-top: 1px solid #444;
+}
+
+/* Optional: DARK MODE adjustment for the lap items */
+html.dark-mode #lapsList li {
+    background-color: #444; /
+}
+/* 1. DEFAULT STYLES for #lapsContainer */
+#lapsContainer {
     /* LIGHT MODE STYLES: */
-    background-color: #5b5959; 
-    color: #fff; 
+    margin-top: .7em;
     transition: background-color 0.3s, color 0.3s; 
 }
 
 /* 2. DARK MODE Override (When the <body> has the .dark-mode class) */
-body.dark-mode #lapsContainer {
-    background-color: #1b1a1a; 
+html.dark-mode #lapsContainer {
     color: #fff; 
 }
 
@@ -143,32 +230,32 @@ body.dark-mode #lapsContainer {
 
 /* Light mode styles */
 .light-mode {
-    background-color: #565151;
+    background-color: #ffffff;
     color: #000000;
 }
 
 /* --- LIGHT MODE (DEFAULT) --- */
 /* Show the sun icon */
-body:not(.dark-mode) .fa-sun {
+html:not(.dark-mode) .fa-sun {
     opacity: 1;
     transform: scale(1);
 }
 
 /* Hide the moon icon */
-body:not(.dark-mode) .fa-moon {
+html:not(.dark-mode) .fa-moon {
     opacity: 0;
     transform: scale(0);
 }
 
 /* --- DARK MODE --- */
 /* Hide the sun icon */
-body.dark-mode .fa-sun {
+html.dark-mode .fa-sun {
     opacity: 0;
     transform: scale(0);
 }
 
 /* Show the moon icon */
-body.dark-mode .fa-moon {
+html.dark-mode .fa-moon {
     opacity: 1;
     transform: scale(1);
     transform: rotateY(180deg); 
@@ -182,7 +269,6 @@ body.dark-mode .fa-moon {
     .top-flex{
         flex-direction: column;
         gap: 1em;
-    }
     
     .buttons img {
         width: 50px;
@@ -198,3 +284,4 @@ body.dark-mode .fa-moon {
     }
 }
 
+}

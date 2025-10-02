@@ -6,6 +6,23 @@
     <title>STOPWATCH APP</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="style.css">
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('theme');
+            
+            if (savedTheme === 'dark') {
+                // 1. Apply dark-mode class globally (fixes overall body/html background)
+                document.documentElement.classList.add('dark-mode'); 
+                
+                // 2. NEW: Target the element and apply its dark background instantly
+                const features = document.querySelector('.features-implemented');
+                if (features) {
+                    features.style.backgroundColor = '#1a1a1a'; // Match a dark background
+                }
+            }
+        })();
+    </script>
+</head>
 </head>
 <body>
     <section class="header">
@@ -28,16 +45,33 @@
             <img src="images/reset.png" alt="reset button" class="btn" id="reset">
         </div>
         <div class="lap">
-            <button id="lapBtn">Lap</button>
+            <button id="lapBtn"><i class="fa-solid fa-flag"></i></button>
             <div id="lapsContainer">
-                 <h3>Laps</h3>
                 <ul id="lapsList">
                  <!-- Laps will be appended here --> 
                 </ul>
             </div>
         </div>
+        <div class="about">
+            <div class="features-implemented">
+                <h3>Features Implemented</h3>
+                <ul id="featuresList">
+                    <li><i class="fa-solid fa-play" style="color: black;"></i> **Start (White)**: Begins the timer.</li>
+                    <li><i class="fa-solid fa-stop" style="color: black;"></i> **Stop (White)**: Pauses the timer, maintaining the current time.</li>
+                    <li><i class="fa-solid fa-rotate-right" style="color: orange;"></i> **Reset (White)**: Stops the timer, clears the time, and wipes the laps.</li>
+                    <li><i class="fa-solid fa-flag" style="color: blue;"></i> **Lap (Button)**: Records the current running time to the list.</li>
+                    <li><i class="fa-solid fa-sun" style="color: rgba(255,140,0,1);"></i> / <i class="fa-solid fa-moon" style="color: rgba(255,140,0,1);"></i> **Theme Toggle**: Switches between light and dark mode, saving the preference.</li>
+                </ul>
+            </div>
         </div>
     </section>
+    
+    <script src="stopwatch.js"></script>
+</body>
+</html>
+        </div>
+    </section>
+    
     
     <!-- Link to your JavaScript file -->
     <script src="stopwatch.js"></script>

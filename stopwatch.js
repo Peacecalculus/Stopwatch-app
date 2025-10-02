@@ -1,35 +1,3 @@
-// Get the theme toggle button
-const themeToggleBtn = document.getElementById('themeToggleBtn');
-
-// Function to apply the saved theme on page load
-function applySavedTheme() {
-    const savedTheme = localStorage.getItem('theme');
-    
-    // If 'dark' is saved, add the dark-mode class
-    if (savedTheme === 'dark') {
-        document.body.classList.add('dark-mode');
-    } else {
-        // Otherwise, ensure dark-mode is removed (for light mode)
-        document.body.classList.remove('dark-mode');
-    }
-}
-
-// Add an event listener to the button
-themeToggleBtn.addEventListener('click', () => {
-    // Toggle the .dark-mode class on the body element
-    document.body.classList.toggle('dark-mode');
-
-    // Save the current theme preference to localStorage
-    if (document.body.classList.contains('dark-mode')) {
-        localStorage.setItem('theme', 'dark');
-    } else {
-        localStorage.setItem('theme', 'light');
-    }
-});
-
-// Call the function to apply the theme when the page first loads
-applySavedTheme();
-
 // --- 1. Variable Declarations (Global Scope) ---
 
 // Timer elements
@@ -45,6 +13,9 @@ const resetBtn = document.getElementById('reset');
 const lapBtn = document.getElementById('lapBtn');
 const lapsList = document.getElementById('lapsList');
 
+// Theme toggle button (Declared only once)
+const themeToggleBtn = document.getElementById('themeToggleBtn');
+
 // Time variables
 let hours = 0;
 let minutes = 0;
@@ -56,13 +27,15 @@ let timerInterval = null; // Holds the ID returned by setInterval
 let isRunning = false;
 let lapCounter = 0;
 
+
 // --- 2. Helper Function for Formatting ---
 
 // Adds a leading zero for single-digit numbers (e.g., 5 becomes 05)
 function formatTime(unit) {
     // Milliseconds need special handling for 3 digits
     if (unit === milliseconds) {
-        return unit < 10 ? '00' + unit : unit < 100 ? '0' + unit : unit;
+        // Correcting the logic to ensure 3 digits are displayed
+        return unit.toString().padStart(3, '0');
     }
     // Hours, minutes, seconds
     return unit < 10 ? '0' + unit : unit;
@@ -99,10 +72,8 @@ function runTimer() {
 
 function startStopwatch() {
     if (!isRunning) {
-        // Use setInterval to call runTimer every 10 milliseconds
         timerInterval = setInterval(runTimer, 10); 
         isRunning = true;
-        // Optionally disable/enable buttons
         startBtn.style.display = 'none';
         stopBtn.style.display = 'inline';
     }
@@ -110,20 +81,82 @@ function startStopwatch() {
 
 function stopStopwatch() {
     if (isRunning) {
-        // Clear the interval to stop the timer
         clearInterval(timerInterval);
         isRunning = false;
-        // Optionally disable/enable buttons
         stopBtn.style.display = 'none';
         startBtn.style.display = 'inline';
     }
 }
 
 function resetStopwatch() {
-    // 1. Stop the timer first
     stopStopwatch();
+    
+    hours = 0;
+    minutes = 0;
+    seconds = 0;
+    milliseconds = 0;
 
-    // 2. Reset all time variables to zero
+    hoursDisplay.textContent = '00';
+    minutesDisplay.textContent = '00';
+    secondsDisplay.textContent = '00';
+    millisecondsDisplay.textContent = '000'; // Reset to 3 digits
+    
+    lapsList.innerHTML = '';
+    lapCounter = 0;
+    
+    startBtn.style.display = 'inline';
+    stopBtn.style.display = 'none';
+}
+
+// Add a function to save the current lap data to localStorage
+function saveLaps() {
+    // Get all the <li> HTML content from the lapsList
+    const lapItems = lapsList.innerHTML;
+    localStorage.setItem('stopwatchLaps', lapItems);
+    localStorage.setItem('lapCounter', lapCounter);
+}
+
+function recordLap() {
+    if (isRunning) {
+        lapCounter++;
+        
+        const currentTime = `${formatTime(hours)}:${formatTime(minutes)}:${formatTime(seconds)}:${formatTime(milliseconds)}`;
+
+        const lapItem = document.createElement('li');
+        lapItem.textContent = `${lapCounter.toString().padStart(2, '0')} - ${currentTime}`;
+
+        lapsList.prepend(lapItem);
+        
+        // NEW: Save the updated laps list after adding a new one
+        saveLaps(); 
+    }
+}
+
+// Function to load laps from localStorage when the page loads
+function loadLaps() {
+    const savedLaps = localStorage.getItem('stopwatchLaps');
+    const savedCounter = localStorage.getItem('lapCounter');
+
+    if (savedLaps) {
+        // Restore the saved HTML directly to the list
+        lapsList.innerHTML = savedLaps;
+    }
+    
+    if (savedCounter) {
+        // Restore the lap counter to the last saved value
+        lapCounter = parseInt(savedCounter);
+    }
+}
+
+// Ensure loadLaps() runs once at the beginning of the script
+// (Place this near your initial variable declarations)
+loadLaps();
+
+function resetStopwatch() {
+    // 1. Stop the timer
+    stopStopwatch();
+    
+    // 2. Reset time variables
     hours = 0;
     minutes = 0;
     seconds = 0;
@@ -135,30 +168,18 @@ function resetStopwatch() {
     secondsDisplay.textContent = '00';
     millisecondsDisplay.textContent = '000';
     
-    // 4. Clear the laps list
+    // 4. Clear the laps list in the DOM
     lapsList.innerHTML = '';
     lapCounter = 0;
     
-    // 5. Ensure the start button is visible
+    // 5. Clear the stored data from localStorage (The important new step)
+    localStorage.removeItem('stopwatchLaps');
+    localStorage.removeItem('lapCounter');
+    
+    // 6. Ensure the start button is visible
     startBtn.style.display = 'inline';
     stopBtn.style.display = 'none';
 }
-
-function recordLap() {
-    if (isRunning) {
-        lapCounter++;
-        // Get the current time string
-        const currentTime = `${formatTime(hours)}:${formatTime(minutes)}:${formatTime(seconds)}:${formatTime(milliseconds)}`;
-        
-        // Create a new list item for the lap
-        const lapItem = document.createElement('li');
-        lapItem.textContent = `Lap ${lapCounter}: ${currentTime}`;
-        
-        // Add the new lap to the top of the list
-        lapsList.prepend(lapItem);
-    }
-}
-
 
 // --- 5. Event Listeners ---
 
@@ -167,5 +188,15 @@ stopBtn.addEventListener('click', stopStopwatch);
 resetBtn.addEventListener('click', resetStopwatch);
 lapBtn.addEventListener('click', recordLap);
 
-// Initial display setup (Hides the stop button at start)
-stopBtn.style.display = 'none';
+// Theme Toggle Click Handler in stopwatch.js
+themeToggleBtn.addEventListener('click', () => {
+    // Change body to document.documentElement
+    document.documentElement.classList.toggle('dark-mode');
+
+    // Save the current theme preference to localStorage
+    if (document.documentElement.classList.contains('dark-mode')) {
+        localStorage.setItem('theme', 'dark');
+    } else {
+        localStorage.setItem('theme', 'light');
+    }
+});

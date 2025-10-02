@@ -102,6 +102,15 @@ body {
     border-radius: 10px;
 }
 
+/* 1. DEFAULT STYLES for #lapsContainer */
+#lapsContainer {
+    margin-top: .7em;
+    transition: background-color 0.3s, color 0.3s; 
+    max-height: 250px;
+    overflow-y: auto;  
+    will-change: transform; 
+}
+
 #lapsList{
     list-style-type: decimal;
     padding-left: 1em;
@@ -174,9 +183,8 @@ body {
 
 /* Dark Mode adjustment for the Features section */
 html.dark-mode .features-implemented {
-    /* Override only the Light Mode properties */
     border-top: 1px solid #323131; 
-    color: #eee; /* Light text in Dark Mode */
+    color: #eee; 
 }
 
 html.dark-mode .features-implemented h3 {
@@ -222,10 +230,29 @@ html.dark-mode #lapsContainer {
     transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 
-/* Dark mode styles */
-.dark-mode {
+/* Dark mode styles - Target the HTML element */
+html.dark-mode {
     background-color: #121212;
     color: #ffffff;
+}
+
+/* Ensure the body gets the background/color from the HTML element */
+html.dark-mode body {
+    background-color: transparent; 
+    color: inherit;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Light mode styles - Target the HTML element (for completeness) */
+html:not(.dark-mode) {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+/* Ensure the body has no specific background in light mode */
+html:not(.dark-mode) body {
+    background-color: transparent;
+    color: inherit;
 }
 
 /* Light mode styles */
